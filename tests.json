@@ -196,8 +196,6 @@
       "patch": [{"op": "test", "path": "/foo", "value": [1, 2]}],
       "error": "test op should fail" },
 
-    { "comment": "json-pointer tests" },
-
     { "comment": "Whole document",
       "doc": { "foo": 1 },
       "patch": [{"op": "test", "path": "", "value": {"foo": 1}}],
@@ -296,7 +294,5 @@
     { "comment": "test add with bad number should fail",
       "doc": ["foo", "sil"],
       "patch": [{"op": "add", "path": "/1e0", "value": "bar"}],
-      "error": "add op shouldn't add to array with bad number" },
-
-    { "comment": "tests complete" }
+      "error": "add op shouldn't add to array with bad number" }
 ]
