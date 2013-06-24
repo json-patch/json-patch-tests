@@ -171,6 +171,11 @@
       "expected": ["foo", ["bar", "baz"]],
       "comment": "value in array replace not flattened" },
 
+    { "comment": "replace whole document",
+      "doc": {"foo": "bar"},
+      "patch": [{"op": "replace", "path": "", "value": {"baz": "qux"}}],
+      "expected": {"baz": "qux"} },
+
     { "comment": "spurious patch properties",
       "doc": {"foo": 1},
       "patch": [{"op": "test", "path": "/foo", "value": 1, "spurious": 1}],
