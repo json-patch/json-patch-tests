@@ -111,16 +111,6 @@
       "patch": [{"op":"add", "path": "/2", "value": "bar"}],
       "expected": ["foo", "sil", "bar"] },
 
-    { "comment": "test against implementation-specific numeric parsing",
-      "doc": {"1e0": "foo"},
-      "patch": [{"op": "test", "path": "/1e0", "value": "foo"}],
-      "expected": {"1e0": "foo"} },
-
-    { "comment": "test with bad number should fail",
-      "doc": ["foo", "bar"],
-      "patch": [{"op": "test", "path": "/1e0", "value": "bar"}],
-      "error": "test op shouldn't get array element 1" },
-
     { "doc": ["foo", "sil"],
       "patch": [{"op": "add", "path": "/bar", "value": 42}],
       "error": "Object operation on array target" },
@@ -266,35 +256,84 @@
       "patch": [ { "op": "add", "path": "/2/1/-", "value": { "foo": [ "bar", "baz" ] } } ],
       "expected": [ 1, 2, [ 3, [ 4, 5, { "foo": [ "bar", "baz" ] } ] ] ]},
 
-    { "comment": "test remove with bad number should fail",
-      "doc": {"foo": 1, "baz": [{"qux": "hello"}]},
-      "patch": [{"op": "remove", "path": "/baz/1e0/qux"}],
-      "error": "remove op shouldn't remove from array with bad number" },
-
     { "comment": "test remove on array",
       "doc": [1, 2, 3, 4],
       "patch": [{"op": "remove", "path": "/0"}],
       "expected": [2, 3, 4] },
 
-    { "comment": "test remove with bad index should fail",
+    { "comment": "bad JSON-pointer array index - underscore",
+      "doc": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "patch": [{"op":"test", "path": "/1_1", "value":11}],
+      "error": "path '/1_1' not found" },
+
+    { "comment": "bad index, plus",
+      "doc": [0, 1],
+      "patch": [{"op":"test", "path": "/+1", "value":1}],
+      "error": "path '/+1' not found" },
+
+    { "comment": "bad index, hex",
+      "doc": [0, 1],
+      "patch": [{"op":"test", "path": "/0x1", "value":1}],
+      "error": "path '/0x1' not found" },
+
+    { "comment": "bad index, long integer",
+      "doc": [0, 1],
+      "patch": [{"op":"test", "path": "/1L", "value":1}],
+      "error": "path '/1L' not found" },
+
+    { "comment": "bad index, intermediate path location",
+      "doc": [[0,[1]]],
+      "patch": [{"op": "test", "path": "/0/1e0/0", "value": 1}],
+      "error": "path '/0/1e0/0' not found" },
+
+    { "comment": "bad index, intermediate path location",
+      "doc": [[0,[1]]],
+      "patch": [{"op": "test", "path": "/0/01/0", "value": 1}],
+      "error": "path '/0/01/0' not found" },
+
+    { "comment": "Don't convert number representation for object lookup",
+      "doc": { "1e0": 1 },
+      "patch": [{"op": "test", "path": "/1", "value": 1}],
+      "error": "path '/1' not found" },
+
+    { "comment": "Don't convert number representation for object lookup",
+      "doc": { "1e0": 1 },
+      "patch": [{"op": "test", "path": "/1e0", "value": 1}] },
+
+    { "comment": "test with bad index should fail",
+      "doc": ["foo", "bar"],
+      "patch": [{"op": "test", "path": "/1e0", "value": "bar"}],
+      "error": "path '/1e0' not found" },
+
+    { "comment": "add with bad index should fail",
+      "doc": ["foo", "sil"],
+      "patch": [{"op": "add", "path": "/1e0", "value": "bar"}],
+      "error": "non-array key '1e0' used on array" },
+
+    { "comment": "remove with bad index should fail",
       "doc": [1, 2, 3, 4],
       "patch": [{"op": "remove", "path": "/1e0"}],
-      "error": "remove op shouldn't remove from array with bad number" },
+      "error": "Non-array key '1e0' used on array" },
 
-    { "comment": "test replace with bad number should fail",
-      "doc": [""],
+    { "comment": "remove with bad index should fail - nested",
+      "doc": {"baz": [{"qux": "hello"}]},
+      "patch": [{"op": "remove", "path": "/baz/1e0/qux"}],
+      "error": "path '/baz/1e0/qux' not found" },
+
+    { "comment": "replace with bad index should fail",
+      "doc": [1, 2, 3],
       "patch": [{"op": "replace", "path": "/1e0", "value": false}],
-      "error": "replace op shouldn't replace in array with bad number" },
+      "error": "non-array key '1e0' used on array" },
 
-    { "comment": "test copy with bad number should fail",
-      "doc": {"baz": [1,2,3], "bar": 1},
-      "patch": [{"op": "copy", "from": "/baz/1e0", "path": "/boo"}],
-      "error": "copy op shouldn't work with bad number" },
+    { "comment": "copy with bad index should fail",
+      "doc": {"baz": [1,2,3]},
+      "patch": [{"op": "copy", "from": "/baz/1e0", "path": "/foo"}],
+      "error": "path '/baz/1e0' not found" },
 
-    { "comment": "test move with bad number should fail",
-      "doc": {"foo": 1, "baz": [1,2,3,4]},
+    { "comment": "move with bad index should fail",
+      "doc": {"baz": [1,2,3]},
       "patch": [{"op": "move", "from": "/baz/1e0", "path": "/foo"}],
-      "error": "move op shouldn't work with bad number" },
+      "error": "path '/baz/1e0' not found" },
 
     { "comment": "test add with bad number should fail",
       "doc": ["foo", "sil"],
