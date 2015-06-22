@@ -70,6 +70,11 @@
       "patch": [{"op": "add", "path": "/baz/0/foo", "value": "world"}],
       "expected": {"foo": 1, "baz": [{"qux": "hello", "foo": "world"}]} },
 
+    { "comment": "Append item to array",
+      "doc": {"bar": [1, 2]},
+      "patch": [{"op": "add", "path": "/bar/2", "value": "3"}],
+      "expected": {"bar": [1, 2, 3]} },
+
     { "doc": {"bar": [1, 2]},
       "patch": [{"op": "add", "path": "/bar/8", "value": "5"}],
       "error": "Out of bounds (upper)" },
