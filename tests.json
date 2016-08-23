@@ -216,6 +216,11 @@
       "expected": {},
       "comment": "null value should be valid obj property to be removed" },
 
+    { "doc": 1,
+      "patch": [{"op": "remove", "path": ""}],
+      "expected": null,
+      "comment": "remove whole document" },
+
     { "doc": {"foo": "bar"},
       "patch": [{"op": "replace", "path": "/foo", "value": null}],
       "expected": {"foo": null},
