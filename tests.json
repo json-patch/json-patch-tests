@@ -57,12 +57,12 @@
 
     { "comment": "replace object document with array document?",
       "doc": {},
-      "patch": [{"op": "replace", "path": "", "value": []}],
+      "patch": [{"op": "add", "path": "", "value": []}],
       "expected": [] },
 
     { "comment": "replace array document with object document?",
       "doc": [],
-      "patch": [{"op": "replace", "path": "", "value": {}}],
+      "patch": [{"op": "add", "path": "", "value": {}}],
       "expected": {} },
 
     { "comment": "append to root array document?",
