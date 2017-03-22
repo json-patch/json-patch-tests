@@ -393,6 +393,16 @@
     { "comment": "test with bad array number that has leading zeros",
       "doc": ["foo", "bar"],
       "patch": [{"op": "test", "path": "/01", "value": "bar"}],
-      "error": "test op should reject the array value, it has leading zeros" }
+      "error": "test op should reject the array value, it has leading zeros" },
+    
+    { "comment": "Removing nonexistent field",
+      "doc": {"foo" : "bar"},
+      "patch": [{"op": "remove", "path": "/baz"}],
+      "error": "removing a nonexistent field should fail" },
+
+    { "comment": "Removing nonexistent index",
+      "doc": ["foo", "bar"],
+      "patch": [{"op": "remove", "path": "/2"}],
+      "error": "removing a nonexistent index should fail" }
 
 ]
