@@ -409,7 +409,7 @@
       "doc": ["foo", "bar"],
       "patch": [{"op": "test", "path": "/01", "value": "bar"}],
       "error": "test op should reject the array value, it has leading zeros" },
-    
+
     { "comment": "Removing nonexistent field",
       "doc": {"foo" : "bar"},
       "patch": [{"op": "remove", "path": "/baz"}],
