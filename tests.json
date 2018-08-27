@@ -264,7 +264,8 @@
 
     { "comment": "Empty-string element",
       "doc": { "": 1 },
-      "patch": [{"op": "test", "path": "/", "value": 1}] },
+      "patch": [{"op": "test", "path": "/", "value": 1}],
+      "expected": { "": 1 } },
 
     { "doc": {
             "foo": ["bar", "baz"],
