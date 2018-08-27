@@ -214,6 +214,7 @@
 
     { "doc": {"foo": null},
       "patch": [{"op": "test", "path": "/foo", "value": null}],
+      "expected": {"foo": null},
       "comment": "null value should be valid obj property" },
 
     { "doc": {"foo": null},
