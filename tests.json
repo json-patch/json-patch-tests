@@ -249,6 +249,7 @@
 
     { "doc": {"foo": [{"foo": 1, "bar": 2}]},
       "patch": [{"op": "test", "path": "/foo", "value": [{"bar": 2, "foo": 1}]}],
+      "expected": {"foo": [{"foo": 1, "bar": 2}]},
       "comment": "test should pass despite (nested) rearrangement" },
 
     { "doc": {"foo": {"bar": [1, 2, 5, 4]}},
