@@ -293,8 +293,23 @@
                 {"op": "test", "path":  "/i\\j", "value": 5},
                 {"op": "test", "path": "/k\"l", "value": 6},
                 {"op": "test", "path": "/ ", "value": 7},
-                {"op": "test", "path": "/m~0n", "value": 8}] },
-
+                {"op": "test", "path": "/m~0n", "value": 8}],
+      "expected": {
+            "": 0,
+            " ": 7,
+            "a/b": 1,
+            "c%d": 2,
+            "e^f": 3,
+            "foo": [
+                "bar",
+                "baz"
+            ],
+            "g|h": 4,
+            "i\\j": 5,
+            "k\"l": 6,
+            "m~n": 8
+        }
+    },
     { "comment": "Move to same location has no effect",
       "doc": {"foo": 1},
       "patch": [{"op": "move", "from": "/foo", "path": "/foo"}],
