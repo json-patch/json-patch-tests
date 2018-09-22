@@ -383,6 +383,21 @@
       "patch": [{"op": "add", "path": "/1e0", "value": "bar"}],
       "error": "add op shouldn't add to array with bad number" },
 
+    { "comment": "missing 'path' parameter",
+      "doc": {},
+      "patch": [ { "op": "add", "value": "bar" } ],
+      "error": "missing 'path' parameter" },
+
+    { "comment": "'path' parameter with null value",
+      "doc": {},
+      "patch": [ { "op": "add", "path": null, "value": "bar" } ],
+      "error": "null is not valid value for 'path'" },
+
+    { "comment": "invalid JSON Pointer token",
+      "doc": {},
+      "patch": [ { "op": "add", "path": "foo", "value": "bar" } ],
+      "error": "JSON Pointer should start with a slash" },
+
     { "comment": "missing 'value' parameter to add",
       "doc": [ 1 ],
       "patch": [ { "op": "add", "path": "/-" } ],
