@@ -480,7 +480,7 @@
        "patch": [{"op": "add", "path": "/FOO", "value": "BAR"}],
        "expected": {"foo": "bar", "FOO": "BAR"} },
 
-    { "comment": "test copy object then change copied",
+    { "comment": "test copy object then change destination",
       "doc": {"foo": {"bar": {"baz": [{"boo": "net"}]}}},
       "patch": [
         {"op": "copy", "from": "/foo", "path": "/bak"},
