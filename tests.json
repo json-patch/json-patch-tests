@@ -136,7 +136,7 @@
       "doc": ["foo", "sil"],
       "patch": [{"op":"add", "path": "/3", "value": "bar"}],
       "error": "index is greater than number of items in array" },
-      
+
     { "comment": "test against implementation-specific numeric parsing",
       "doc": {"1e0": "foo"},
       "patch": [{"op": "test", "path": "/1e0", "value": "foo"}],
@@ -478,7 +478,23 @@
     { "comment": "Patch with different capitalisation than doc",
        "doc": {"foo":"bar"},
        "patch": [{"op": "add", "path": "/FOO", "value": "BAR"}],
-       "expected": {"foo": "bar", "FOO": "BAR"}
+       "expected": {"foo": "bar", "FOO": "BAR"} },
+
+    { "comment": "test copy object then change destination",
+      "doc": {"foo": {"bar": {"baz": [{"boo": "net"}]}}},
+      "patch": [
+        {"op": "copy", "from": "/foo", "path": "/bak"},
+        {"op": "replace", "path": "/bak/bar/baz/0/boo", "value": "qux"}
+      ],
+      "expected": {"foo": {"bar": {"baz": [{"boo": "net"}]}}, "bak": {"bar": {"baz": [{"boo":"qux"}]}}} },
+
+    { "comment": "test copy object then change source",
+      "doc": {"foo": {"bar": {"baz": [{"boo": "net"}]}}},
+      "patch": [
+        {"op": "copy", "from": "/foo", "path": "/bak"},
+        {"op": "replace", "path": "/foo/bar/baz/0/boo", "value": "qux"}
+      ],
+      "expected": {"foo": {"bar": {"baz": [{"boo": "qux"}]}}, "bak": {"bar": {"baz": [{"boo":"net"}]}}}
     }
 
 ]
