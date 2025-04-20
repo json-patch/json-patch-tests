@@ -94,9 +94,10 @@
       "patch": [{"op": "add", "path": "/bar/8", "value": "5"}],
       "error": "Out of bounds (upper)" },
 
-    { "doc": {"bar": [1, 2]},
+    { "comment": "Negative index is evaluated as a path",
+      "doc": {"bar": [1, 2]},
       "patch": [{"op": "add", "path": "/bar/-1", "value": "5"}],
-      "error": "Out of bounds (lower)" },
+      "error": "Negatives indices aren't valid" },
 
     { "doc": {"foo": 1},
       "patch": [{"op": "add", "path": "/bar", "value": true}],
